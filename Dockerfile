@@ -5,4 +5,4 @@ RUN maven clean package -DskipTests
 FROM eclipse-temurin:21-jdk
 COPY --from=build COPY --from=build /target/*.jar expenseTracker.jar
 EXPOSE 8080
-ENTRYPOINT [ "java","--jar","expenseTracker.jar" ]
+ENTRYPOINT [ "java","-jar","expenseTracker.jar" ]
