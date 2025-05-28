@@ -1,8 +1,13 @@
+# Stage 1: Build
 FROM maven:3.9.6-eclipse-temurin-21 AS build
+WORKDIR /app
 COPY . .
-RUN maven clean package -DskipTests
+RUN mvn clean package -DskipTests
 
+# Stage 2: Run
 FROM eclipse-temurin:21-jdk
-COPY --from=build COPY --from=build /target/*.jar expenseTracker.jar
+WORKDIR /app
+COPY --from=build /app/target/*.jar expenseTracker.jar
 EXPOSE 8080
-ENTRYPOINT [ "java","-jar","expenseTracker.jar" ]
+ENTRYPOINT ["java", "-jar", "expenseTracker.jar"]
+
